@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.Build.Evaluation;
 using Microsoft.Build.Execution;
+using Microsoft.Build.Framework;
+using Microsoft.Build.Logging;
 
 namespace ProjectBuilder
 {
@@ -14,7 +16,10 @@ namespace ProjectBuilder
             try
             {
                 var result = BuildManager.DefaultBuildManager.Build(
-                    new BuildParameters(),
+                    new BuildParameters
+                    {
+                        Loggers = new[] { new ConsoleLogger() }
+                    },
                     new BuildRequestData(
                         new ProjectInstance(@"..\..\..\TheProject\TheProject.csproj"), new[] {"Rebuild"}));
                 Console.WriteLine("OveralResult: {0}", result.OverallResult);
